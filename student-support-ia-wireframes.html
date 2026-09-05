@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Support Service — Information Architecture &amp; Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8;
+    --surface:#FFFFFF;
+    --ink:#14161A;
+    --ink-soft:#4B5160;
+    --line:#1F2430;
+    --line-soft:#C7CBD3;
+    --line-faint:#E4E6EA;
+    --accent:#2952CC;
+    --accent-soft:#E7ECFB;
+    --danger:#B3261E;
+    --danger-soft:#FBE9E7;
+    --success:#1E7A4C;
+    --success-soft:#E6F4EC;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:0 28px 120px;}
+  header.hero{
+    padding:64px 0 40px;
+    border-bottom:1px solid var(--line-faint);
+  }
+  .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  header.hero h1{font-size:40px; max-width:680px;}
+  header.hero p.lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:600px;
+    margin-top:16px;
+  }
+  .persona-strip{
+    display:flex;
+    gap:14px;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+  .persona{
+    background:var(--surface);
+    border:1px solid var(--line-faint);
+    border-radius:10px;
+    padding:12px 16px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    flex:1 1 220px;
+  }
+  .persona b{color:var(--ink); font-weight:600;}
+  nav.jump{
+    position:sticky; top:0; z-index:10;
+    background:rgba(250,250,248,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line-faint);
+    padding:14px 0;
+    margin-bottom:8px;
+  }
+  nav.jump .wrap{padding-top:0;padding-bottom:0;display:flex; gap:22px; flex-wrap:wrap;}
+  nav.jump a{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    font-weight:500;
+  }
+  nav.jump a:hover{color:var(--accent);}
+  section{padding:56px 0; border-bottom:1px solid var(--line-faint);}
+  section:last-of-type{border-bottom:none;}
+  .section-head{margin-bottom:28px;}
+  .section-head .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--accent);
+    display:block;
+    margin-bottom:8px;
+  }
+  .section-head h2{font-size:26px;}
+  .section-head p{color:var(--ink-soft); max-width:620px; margin-top:10px; font-size:15px;}
+
+  /* journey diagram */
+  .journey-svg-wrap{
+    background:var(--surface);
+    border:1px solid var(--line-faint);
+    border-radius:var(--radius);
+    padding:20px 10px;
+    overflow-x:auto;
+  }
+  .legend{display:flex; gap:22px; flex-wrap:wrap; margin-top:18px; font-size:13px; color:var(--ink-soft);}
+  .legend span{display:inline-flex; align-items:center; gap:8px;}
+  .swatch{width:14px; height:14px; border-radius:3px; display:inline-block;}
+
+  /* sitemap */
+  .sitemap-svg-wrap{
+    background:var(--surface);
+    border:1px solid var(--line-faint);
+    border-radius:var(--radius);
+    padding:24px 10px;
+    overflow-x:auto;
+  }
+
+  /* phone frames */
+  .frame-row{
+    display:flex;
+    gap:26px;
+    overflow-x:auto;
+    padding:10px 4px 18px;
+    scroll-snap-type:x proximity;
+  }
+  .frame-card{flex:0 0 auto; width:250px; scroll-snap-align:start;}
+  .phone{
+    width:250px;
+    border:2px solid var(--line);
+    border-radius:26px;
+    padding:8px;
+    background:var(--surface);
+  }
+  .phone svg{display:block; width:100%; height:auto; border-radius:18px; background:#fff;}
+  .frame-caption{margin-top:14px;}
+  .frame-caption .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  .frame-caption h3{font-size:16px; margin-top:4px; font-weight:600; font-family:'IBM Plex Sans',sans-serif;}
+  .frame-caption p{font-size:13px; color:var(--ink-soft); margin-top:6px;}
+
+  /* desktop wireframe */
+  .desktop-wrap{
+    background:var(--surface);
+    border:1px solid var(--line-faint);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .desktop-wrap svg{width:100%; height:auto; display:block;}
+  .adapt-notes{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:20px;
+  }
+  .adapt-notes .note{
+    background:var(--accent-soft);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .adapt-notes .note b{display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.03em; color:var(--accent); margin-bottom:6px; font-family:'IBM Plex Mono',monospace;}
+
+  /* annotations */
+  .annot-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:18px;
+  }
+  .annot-card{
+    background:var(--surface);
+    border:1px solid var(--line-faint);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .annot-card h3{font-size:15.5px; font-family:'IBM Plex Sans',sans-serif; font-weight:600;}
+  .annot-card ul{margin:12px 0 0; padding-left:18px; font-size:13.5px; color:var(--ink-soft);}
+  .annot-card li{margin-bottom:8px;}
+
+  /* sitemap list fallback */
+  .screen-inventory{
+    margin-top:24px;
+    border:1px solid var(--line-faint);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  th,td{text-align:left; padding:11px 16px; border-bottom:1px solid var(--line-faint);}
+  th{background:var(--bg); font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); font-weight:500;}
+  tr:last-child td{border-bottom:none;}
+  td.mono{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--accent);}
+
+  footer.explain{
+    padding:56px 0 0;
+  }
+  footer.explain h2{font-size:22px;}
+  footer.explain p{color:var(--ink-soft); font-size:15px; max-width:680px; margin-top:14px;}
+  footer.explain .meta{margin-top:24px; font-size:12.5px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;}
+
+  @media (max-width:720px){
+    .adapt-notes{grid-template-columns:1fr;}
+    .annot-grid{grid-template-columns:1fr;}
+    header.hero h1{font-size:30px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">UI/UX · TASK 2 · INFORMATION ARCHITECTURE &amp; WIREFRAMES</div>
+    <h1>Student Support Service</h1>
+    <p class="lede">A mobile-first flow that helps a student understand assigned work, find the required source material, submit proof, and recover cleanly when a reviewer sends work back.</p>
+    <div class="persona-strip">
+      <div class="persona"><b>Asha, 19</b> — Android, intermittent mobile data, first internship. Needs plain instructions and visible progress.</div>
+      <div class="persona"><b>Ravi, 22</b> — screen magnifier, keyboard user on laptop. Needs scalable text and predictable focus order.</div>
+      <div class="persona"><b>Meera, 20</b> — shared family device, limited uninterrupted time. Needs saved progress and safe session controls.</div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump">
+  <div class="wrap">
+    <a href="#journey">User journey</a>
+    <a href="#sitemap">Sitemap</a>
+    <a href="#mobile">Mobile wireframes</a>
+    <a href="#desktop">Desktop adaptation</a>
+    <a href="#annotations">Annotations</a>
+    <a href="#explanation">Explanation</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ USER JOURNEY ============ -->
+<section id="journey">
+  <div class="section-head">
+    <span class="num">01</span>
+    <h2>Primary user journey</h2>
+    <p>The flow a student follows from opening the app to getting credit for their work, including the decision point before submitting and the recovery path after reviewer feedback.</p>
+  </div>
+
+  <div class="journey-svg-wrap">
+    <svg viewBox="0 0 1180 380" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#4B5160"/>
+        </marker>
+        <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#B3261E"/>
+        </marker>
+      </defs>
+
+      <!-- Entry -->
+      <rect x="20" y="150" width="140" height="64" rx="10" fill="#E7ECFB" stroke="#2952CC" stroke-width="1.5"/>
+      <text x="90" y="176" font-size="11" fill="#2952CC" text-anchor="middle" font-family="IBM Plex Mono, monospace">ENTRY</text>
+      <text x="90" y="196" font-size="13" fill="#14161A" text-anchor="middle" font-weight="600">Open Home</text>
+
+      <line x1="160" y1="182" x2="212" y2="182" stroke="#4B5160" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- Assignment detail -->
+      <rect x="214" y="150" width="150" height="64" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="289" y="176" font-size="13" fill="#14161A" text-anchor="middle" font-weight="600">Assignment</text>
+      <text x="289" y="194" font-size="13" fill="#14161A" text-anchor="middle" font-weight="600">detail</text>
+
+      <line x1="364" y1="182" x2="416" y2="182" stroke="#4B5160" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- Decision diamond -->
+      <polygon points="490,142 570,182 490,222 410,182" fill="#fff" stroke="#2952CC" stroke-width="1.5"/>
+      <text x="490" y="176" font-size="11" fill="#2952CC" text-anchor="middle" font-family="IBM Plex Mono, monospace">DECISION</text>
+      <text x="490" y="192" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Ready to</text>
+      <text x="490" y="206" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">submit?</text>
+
+      <!-- No branch: go review materials -->
+      <line x1="490" y1="142" x2="490" y2="70" stroke="#4B5160" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="502" y="100" font-size="11.5" fill="#4B5160">No</text>
+      <rect x="410" y="20" width="160" height="50" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="490" y="41" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Source material</text>
+      <text x="490" y="57" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">list</text>
+      <line x1="410" y1="45" x2="300" y2="45" stroke="#4B5160" stroke-width="1.5"/>
+      <line x1="300" y1="45" x2="289" y2="148" stroke="#4B5160" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- Yes branch -->
+      <line x1="570" y1="182" x2="622" y2="182" stroke="#4B5160" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="586" y="172" font-size="11.5" fill="#4B5160">Yes</text>
+
+      <rect x="624" y="150" width="150" height="64" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="699" y="176" font-size="13" fill="#14161A" text-anchor="middle" font-weight="600">Submit proof</text>
+      <text x="699" y="194" font-size="13" fill="#14161A" text-anchor="middle" font-weight="600">(upload)</text>
+
+      <!-- error branch down -->
+      <line x1="699" y1="214" x2="699" y2="270" stroke="#B3261E" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrowRed)"/>
+      <text x="712" y="248" font-size="11.5" fill="#B3261E">offline / fails</text>
+      <rect x="619" y="272" width="160" height="56" rx="10" fill="#FBE9E7" stroke="#B3261E" stroke-width="1.5"/>
+      <text x="699" y="294" font-size="11" fill="#B3261E" text-anchor="middle" font-family="IBM Plex Mono, monospace">ERROR</text>
+      <text x="699" y="312" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Retry / save draft</text>
+      <line x1="779" y1="300" x2="900" y2="300" stroke="#B3261E" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="900" y1="300" x2="900" y2="216" stroke="#B3261E" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrowRed)"/>
+
+      <!-- Success -->
+      <line x1="774" y1="182" x2="826" y2="182" stroke="#4B5160" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <rect x="828" y="150" width="150" height="64" rx="10" fill="#E6F4EC" stroke="#1E7A4C" stroke-width="1.5"/>
+      <text x="903" y="172" font-size="11" fill="#1E7A4C" text-anchor="middle" font-family="IBM Plex Mono, monospace">SUCCESS</text>
+      <text x="903" y="192" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Submitted —</text>
+      <text x="903" y="206" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">in review</text>
+
+      <!-- Reviewer branch -->
+      <line x1="978" y1="182" x2="1030" y2="182" stroke="#4B5160" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <polygon points="1090,142 1160,182 1090,222 1020,182" fill="#fff" stroke="#2952CC" stroke-width="1.5"/>
+      <text x="1090" y="176" font-size="10.5" fill="#2952CC" text-anchor="middle" font-family="IBM Plex Mono, monospace">REVIEW</text>
+      <text x="1090" y="192" font-size="11.5" fill="#14161A" text-anchor="middle" font-weight="600">Approved?</text>
+
+      <!-- approved -> done -->
+      <line x1="1090" y1="142" x2="1090" y2="70" stroke="#1E7A4C" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="1102" y="100" font-size="11.5" fill="#1E7A4C">Yes</text>
+      <rect x="1010" y="20" width="160" height="50" rx="10" fill="#E6F4EC" stroke="#1E7A4C" stroke-width="1.5"/>
+      <text x="1090" y="41" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Credit given</text>
+      <text x="1090" y="57" font-size="11" fill="#1E7A4C" text-anchor="middle" font-family="IBM Plex Mono, monospace">END STATE</text>
+
+      <!-- not approved -> feedback recovery, loop back to submit -->
+      <line x1="1090" y1="222" x2="1090" y2="330" stroke="#B3261E" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+      <text x="1104" y="280" font-size="11.5" fill="#B3261E">No</text>
+      <rect x="1005" y="332" width="170" height="40" rx="8" fill="#FBE9E7" stroke="#B3261E" stroke-width="1.5"/>
+      <text x="1090" y="357" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Feedback received</text>
+      <line x1="1005" y1="352" x2="500" y2="352" stroke="#B3261E" stroke-width="1.5"/>
+      <line x1="500" y1="352" x2="500" y2="222" stroke="#B3261E" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+      <text x="512" y="340" font-size="11" fill="#B3261E">Revise → resubmit (loops to decision)</text>
+    </svg>
+  </div>
+  <div class="legend">
+    <span><span class="swatch" style="background:#E7ECFB;border:1px solid #2952CC;"></span>Entry / decision</span>
+    <span><span class="swatch" style="background:#fff;border:1px solid #1F2430;"></span>Standard screen</span>
+    <span><span class="swatch" style="background:#E6F4EC;border:1px solid #1E7A4C;"></span>Success / end state</span>
+    <span><span class="swatch" style="background:#FBE9E7;border:1px solid #B3261E;"></span>Error / recovery</span>
+  </div>
+</section>
+
+<!-- ============ SITEMAP ============ -->
+<section id="sitemap">
+  <div class="section-head">
+    <span class="num">02</span>
+    <h2>Sitemap &amp; screen inventory</h2>
+    <p>Everything hangs off two entry points on Home: the assignment list and the student's profile. Depth stays shallow — three taps or fewer from Home to any screen.</p>
+  </div>
+
+  <div class="sitemap-svg-wrap">
+    <svg viewBox="0 0 940 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
+      <!-- level 0 -->
+      <rect x="400" y="10" width="140" height="46" rx="8" fill="#E7ECFB" stroke="#2952CC" stroke-width="1.5"/>
+      <text x="470" y="38" font-size="13" fill="#14161A" text-anchor="middle" font-weight="600">Home</text>
+
+      <!-- lines down to level 1 -->
+      <line x1="470" y1="56" x2="470" y2="76" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="150" y1="76" x2="800" y2="76" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="150" y1="76" x2="150" y2="96" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="470" y1="76" x2="470" y2="96" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="800" y1="76" x2="800" y2="96" stroke="#C7CBD3" stroke-width="1.5"/>
+
+      <!-- level 1 nodes -->
+      <rect x="70" y="98" width="160" height="44" rx="8" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="150" y="124" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Assignment list</text>
+
+      <rect x="390" y="98" width="160" height="44" rx="8" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="470" y="124" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Assignment detail</text>
+
+      <rect x="720" y="98" width="160" height="44" rx="8" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="800" y="124" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Profile / settings</text>
+
+      <!-- level 2 under Assignment detail -->
+      <line x1="470" y1="142" x2="470" y2="160" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="290" y1="160" x2="650" y2="160" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="290" y1="160" x2="290" y2="180" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="470" y1="160" x2="470" y2="180" stroke="#C7CBD3" stroke-width="1.5"/>
+      <line x1="650" y1="160" x2="650" y2="180" stroke="#C7CBD3" stroke-width="1.5"/>
+
+      <rect x="210" y="182" width="160" height="42" rx="8" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="290" y="207" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Source material</text>
+
+      <rect x="390" y="182" width="160" height="42" rx="8" fill="#fff" stroke="#1F2430" stroke-width="1.5"/>
+      <text x="470" y="207" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Submit proof</text>
+
+      <rect x="570" y="182" width="160" height="42" rx="8" fill="#E6F4EC" stroke="#1E7A4C" stroke-width="1.5"/>
+      <text x="650" y="207" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Confirmation</text>
+
+      <!-- level 3 under submit proof: error, and under confirmation: feedback -->
+      <line x1="470" y1="224" x2="470" y2="240" stroke="#C7CBD3" stroke-width="1.5"/>
+      <rect x="390" y="242" width="160" height="42" rx="8" fill="#FBE9E7" stroke="#B3261E" stroke-width="1.5"/>
+      <text x="470" y="267" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Upload error</text>
+
+      <line x1="650" y1="224" x2="650" y2="240" stroke="#C7CBD3" stroke-width="1.5"/>
+      <rect x="570" y="242" width="160" height="42" rx="8" fill="#FBE9E7" stroke="#B3261E" stroke-width="1.5"/>
+      <text x="650" y="267" font-size="12" fill="#14161A" text-anchor="middle" font-weight="600">Feedback &amp; resubmit</text>
+    </svg>
+  </div>
+
+  <div class="screen-inventory">
+    <table>
+      <thead><tr><th>Screen</th><th>Parent</th><th>Purpose</th><th>Key state</th></tr></thead>
+      <tbody>
+        <tr><td>Home</td><td class="mono">—</td><td>Overview of assigned work and progress</td><td>Entry</td></tr>
+        <tr><td>Assignment list</td><td class="mono">Home</td><td>All assignments, filterable by status</td><td>—</td></tr>
+        <tr><td>Assignment detail</td><td class="mono">Home</td><td>Instructions + the ready-to-submit decision</td><td>Decision</td></tr>
+        <tr><td>Source material</td><td class="mono">Assignment detail</td><td>Required readings/resources for the task</td><td>—</td></tr>
+        <tr><td>Submit proof</td><td class="mono">Assignment detail</td><td>Upload evidence of completed work</td><td>—</td></tr>
+        <tr><td>Upload error</td><td class="mono">Submit proof</td><td>Offline or failed upload, with retry</td><td>Error</td></tr>
+        <tr><td>Confirmation</td><td class="mono">Submit proof</td><td>Submission received, status timeline</td><td>Success</td></tr>
+        <tr><td>Feedback &amp; resubmit</td><td class="mono">Confirmation</td><td>Reviewer comments and a path back to submit</td><td>Recovery</td></tr>
+        <tr><td>Profile / settings</td><td class="mono">Home</td><td>Saved progress, text size, session controls</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ MOBILE WIREFRAMES ============ -->
+<section id="mobile">
+  <div class="section-head">
+    <span class="num">03</span>
+    <h2>Mobile wireframes</h2>
+    <p>Low-fidelity, mobile-first. Grayscale blocks stand in for real content; the single accent color marks the primary action on each screen.</p>
+  </div>
+
+  <div class="frame-row">
+
+    <!-- FRAME 1: HOME -->
+    <div class="frame-card">
+      <div class="phone">
+        <svg viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="260" height="520" fill="#fff"/>
+          <rect x="0" y="0" width="260" height="44" fill="#F3F4F6"/>
+          <text x="20" y="28" font-size="15" font-weight="700" fill="#14161A" font-family="IBM Plex Sans">Home</text>
+          <circle cx="230" cy="22" r="10" fill="none" stroke="#4B5160" stroke-width="1.4"/>
+          <rect x="16" y="58" width="228" height="30" rx="8" fill="#F3F4F6"/>
+          <line x1="28" y1="73" x2="120" y2="73" stroke="#9CA3AF" stroke-width="2"/>
+          <text x="16" y="108" font-size="11" fill="#9CA3AF" font-family="IBM Plex Mono">DUE THIS WEEK</text>
+          <!-- card 1 -->
+          <rect x="16" y="116" width="228" height="72" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <rect x="28" y="128" width="28" height="28" rx="6" fill="#E7ECFB"/>
+          <line x1="66" y1="134" x2="180" y2="134" stroke="#14161A" stroke-width="2.4"/>
+          <line x1="66" y1="146" x2="150" y2="146" stroke="#C7CBD3" stroke-width="2"/>
+          <rect x="66" y="158" width="58" height="16" rx="8" fill="#FBE9E7"/>
+          <text x="95" y="169" font-size="8.5" fill="#B3261E" text-anchor="middle" font-family="IBM Plex Mono">DUE SOON</text>
+          <!-- card 2 -->
+          <rect x="16" y="196" width="228" height="72" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <rect x="28" y="208" width="28" height="28" rx="6" fill="#E7ECFB"/>
+          <line x1="66" y1="214" x2="195" y2="214" stroke="#14161A" stroke-width="2.4"/>
+          <line x1="66" y1="226" x2="160" y2="226" stroke="#C7CBD3" stroke-width="2"/>
+          <rect x="66" y="238" width="72" height="16" rx="8" fill="#E6F4EC"/>
+          <text x="102" y="249" font-size="8.5" fill="#1E7A4C" text-anchor="middle" font-family="IBM Plex Mono">IN REVIEW</text>
+          <!-- card 3 -->
+          <rect x="16" y="276" width="228" height="72" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <rect x="28" y="288" width="28" height="28" rx="6" fill="#E7ECFB"/>
+          <line x1="66" y1="294" x2="170" y2="294" stroke="#14161A" stroke-width="2.4"/>
+          <line x1="66" y1="306" x2="140" y2="306" stroke="#C7CBD3" stroke-width="2"/>
+          <rect x="66" y="318" width="88" height="16" rx="8" fill="#F3F4F6"/>
+          <text x="110" y="329" font-size="8.5" fill="#4B5160" text-anchor="middle" font-family="IBM Plex Mono">NOT STARTED</text>
+          <!-- bottom tab bar -->
+          <rect x="0" y="472" width="260" height="48" fill="#F3F4F6"/>
+          <circle cx="70" cy="496" r="4" fill="#2952CC"/>
+          <line x1="55" y1="510" x2="85" y2="510" stroke="#2952CC" stroke-width="2"/>
+          <circle cx="130" cy="496" r="4" fill="#C7CBD3"/>
+          <line x1="115" y1="510" x2="145" y2="510" stroke="#C7CBD3" stroke-width="2"/>
+          <circle cx="190" cy="496" r="4" fill="#C7CBD3"/>
+          <line x1="175" y1="510" x2="205" y2="510" stroke="#C7CBD3" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="frame-caption">
+        <div class="tag">Entry</div>
+        <h3>Home</h3>
+        <p>Assignments grouped by status, most urgent first. Bottom tab bar: Home / Materials / Profile.</p>
+      </div>
+    </div>
+
+    <!-- FRAME 2: ASSIGNMENT DETAIL -->
+    <div class="frame-card">
+      <div class="phone">
+        <svg viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="260" height="520" fill="#fff"/>
+          <rect x="0" y="0" width="260" height="44" fill="#F3F4F6"/>
+          <path d="M22 22 L14 22 M14 22 L20 16 M14 22 L20 28" stroke="#14161A" stroke-width="1.6" fill="none"/>
+          <text x="38" y="28" font-size="14" font-weight="700" fill="#14161A" font-family="IBM Plex Sans">Case Study Draft</text>
+          <rect x="16" y="58" width="70" height="18" rx="9" fill="#FBE9E7"/>
+          <text x="51" y="70" font-size="8.5" fill="#B3261E" text-anchor="middle" font-family="IBM Plex Mono">DUE FRI</text>
+          <text x="16" y="100" font-size="10.5" fill="#9CA3AF" font-family="IBM Plex Mono">INSTRUCTIONS</text>
+          <line x1="16" y1="112" x2="244" y2="112" stroke="#C7CBD3" stroke-width="2"/>
+          <line x1="16" y1="124" x2="244" y2="124" stroke="#C7CBD3" stroke-width="2"/>
+          <line x1="16" y1="136" x2="180" y2="136" stroke="#C7CBD3" stroke-width="2"/>
+          <text x="16" y="168" font-size="10.5" fill="#9CA3AF" font-family="IBM Plex Mono">REQUIRED MATERIAL · 3</text>
+          <rect x="16" y="178" width="70" height="24" rx="12" fill="#F3F4F6"/>
+          <rect x="94" y="178" width="70" height="24" rx="12" fill="#F3F4F6"/>
+          <rect x="172" y="178" width="70" height="24" rx="12" fill="#F3F4F6"/>
+          <!-- decision buttons -->
+          <rect x="16" y="420" width="228" height="44" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.4"/>
+          <text x="130" y="447" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Review materials first</text>
+          <rect x="16" y="472" width="228" height="44" rx="10" fill="#2952CC"/>
+          <text x="130" y="499" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600">I'm ready — submit proof</text>
+        </svg>
+      </div>
+      <div class="frame-caption">
+        <div class="tag">Decision</div>
+        <h3>Assignment detail</h3>
+        <p>Instructions and required material up top; the two paths — review first, or submit — sit fixed at the bottom.</p>
+      </div>
+    </div>
+
+    <!-- FRAME 3: SOURCE MATERIAL -->
+    <div class="frame-card">
+      <div class="phone">
+        <svg viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="260" height="520" fill="#fff"/>
+          <rect x="0" y="0" width="260" height="44" fill="#F3F4F6"/>
+          <path d="M22 22 L14 22 M14 22 L20 16 M14 22 L20 28" stroke="#14161A" stroke-width="1.6" fill="none"/>
+          <text x="38" y="28" font-size="14" font-weight="700" fill="#14161A" font-family="IBM Plex Sans">Source material</text>
+          <rect x="16" y="58" width="228" height="28" rx="14" fill="#F3F4F6"/>
+          <line x1="28" y1="72" x2="90" y2="72" stroke="#9CA3AF" stroke-width="2"/>
+          <!-- resource cards -->
+          <rect x="16" y="98" width="228" height="60" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <rect x="28" y="110" width="24" height="24" rx="5" fill="#E7ECFB"/>
+          <line x1="60" y1="116" x2="170" y2="116" stroke="#14161A" stroke-width="2.2"/>
+          <rect x="60" y="126" width="46" height="14" rx="7" fill="#F3F4F6"/>
+          <text x="222" y="134" font-size="10.5" fill="#2952CC" text-anchor="middle" font-weight="600">Open</text>
+
+          <rect x="16" y="166" width="228" height="60" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <rect x="28" y="178" width="24" height="24" rx="5" fill="#E7ECFB"/>
+          <line x1="60" y1="184" x2="190" y2="184" stroke="#14161A" stroke-width="2.2"/>
+          <rect x="60" y="194" width="46" height="14" rx="7" fill="#F3F4F6"/>
+          <text x="222" y="202" font-size="10.5" fill="#2952CC" text-anchor="middle" font-weight="600">Open</text>
+
+          <rect x="16" y="234" width="228" height="60" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <rect x="28" y="246" width="24" height="24" rx="5" fill="#E7ECFB"/>
+          <line x1="60" y1="252" x2="160" y2="252" stroke="#14161A" stroke-width="2.2"/>
+          <rect x="60" y="262" width="46" height="14" rx="7" fill="#F3F4F6"/>
+          <text x="222" y="270" font-size="10.5" fill="#2952CC" text-anchor="middle" font-weight="600">Open</text>
+
+          <rect x="16" y="472" width="228" height="44" rx="10" fill="#2952CC"/>
+          <text x="130" y="499" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600">Back to assignment</text>
+        </svg>
+      </div>
+      <div class="frame-caption">
+        <div class="tag">Support</div>
+        <h3>Source material</h3>
+        <p>Downloadable/offline-friendly resources — each opens in place so a flaky connection doesn't lose the student's spot.</p>
+      </div>
+    </div>
+
+    <!-- FRAME 4: SUBMIT PROOF (with error inset) -->
+    <div class="frame-card">
+      <div class="phone">
+        <svg viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="260" height="520" fill="#fff"/>
+          <rect x="0" y="0" width="260" height="44" fill="#F3F4F6"/>
+          <path d="M22 22 L14 22 M14 22 L20 16 M14 22 L20 28" stroke="#14161A" stroke-width="1.6" fill="none"/>
+          <text x="38" y="28" font-size="14" font-weight="700" fill="#14161A" font-family="IBM Plex Sans">Submit proof</text>
+          <!-- offline banner -->
+          <rect x="0" y="44" width="260" height="26" fill="#FBE9E7"/>
+          <text x="130" y="61" font-size="10.5" fill="#B3261E" text-anchor="middle" font-weight="600">You're offline — draft saved locally</text>
+          <!-- dropzone -->
+          <rect x="16" y="86" width="228" height="90" rx="10" fill="#F3F4F6" stroke="#C7CBD3" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="130" y="136" font-size="11.5" fill="#4B5160" text-anchor="middle">Tap to attach a photo or file</text>
+          <!-- attached chip -->
+          <rect x="16" y="188" width="150" height="30" rx="15" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <text x="34" y="207" font-size="10.5" fill="#14161A">photo_evidence.jpg</text>
+          <text x="16" y="238" font-size="10.5" fill="#9CA3AF" font-family="IBM Plex Mono">NOTE TO REVIEWER</text>
+          <rect x="16" y="248" width="228" height="70" rx="8" fill="#fff" stroke="#C7CBD3" stroke-width="1.3"/>
+          <line x1="26" y1="264" x2="200" y2="264" stroke="#E4E6EA" stroke-width="2"/>
+          <line x1="26" y1="278" x2="160" y2="278" stroke="#E4E6EA" stroke-width="2"/>
+          <!-- disabled submit due to offline -->
+          <rect x="16" y="472" width="228" height="44" rx="10" fill="#E4E6EA"/>
+          <text x="130" y="499" font-size="12.5" fill="#9CA3AF" text-anchor="middle" font-weight="600">Retry when back online</text>
+        </svg>
+      </div>
+      <div class="frame-caption">
+        <div class="tag">Error state</div>
+        <h3>Submit proof — offline</h3>
+        <p>Upload disables gracefully and explains why; the draft is kept so nothing typed is lost. Retries automatically on reconnect.</p>
+      </div>
+    </div>
+
+    <!-- FRAME 5: SUCCESS -->
+    <div class="frame-card">
+      <div class="phone">
+        <svg viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="260" height="520" fill="#fff"/>
+          <rect x="0" y="0" width="260" height="44" fill="#F3F4F6"/>
+          <circle cx="130" cy="130" r="34" fill="#E6F4EC" stroke="#1E7A4C" stroke-width="1.6"/>
+          <path d="M114 130 L126 142 L148 116" stroke="#1E7A4C" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="130" y="194" font-size="15" fill="#14161A" text-anchor="middle" font-weight="700" font-family="IBM Plex Sans">Submitted for review</text>
+          <text x="130" y="214" font-size="11" fill="#4B5160" text-anchor="middle">Case Study Draft · just now</text>
+
+          <!-- status timeline -->
+          <line x1="46" y1="256" x2="214" y2="256" stroke="#C7CBD3" stroke-width="2"/>
+          <circle cx="46" cy="256" r="7" fill="#1E7A4C"/>
+          <circle cx="130" cy="256" r="7" fill="#2952CC"/>
+          <circle cx="214" cy="256" r="7" fill="#C7CBD3"/>
+          <text x="46" y="278" font-size="9" fill="#4B5160" text-anchor="middle">Submitted</text>
+          <text x="130" y="278" font-size="9" fill="#4B5160" text-anchor="middle">In review</text>
+          <text x="214" y="278" font-size="9" fill="#9CA3AF" text-anchor="middle">Reviewed</text>
+
+          <rect x="16" y="472" width="228" height="44" rx="10" fill="#2952CC"/>
+          <text x="130" y="499" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600">Back to dashboard</text>
+        </svg>
+      </div>
+      <div class="frame-caption">
+        <div class="tag">Success</div>
+        <h3>Confirmation</h3>
+        <p>Confirms receipt and sets expectations with a timeline, so the student knows what happens next and doesn't resubmit out of doubt.</p>
+      </div>
+    </div>
+
+    <!-- FRAME 6: FEEDBACK / RECOVERY -->
+    <div class="frame-card">
+      <div class="phone">
+        <svg viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="260" height="520" fill="#fff"/>
+          <rect x="0" y="0" width="260" height="44" fill="#F3F4F6"/>
+          <path d="M22 22 L14 22 M14 22 L20 16 M14 22 L20 28" stroke="#14161A" stroke-width="1.6" fill="none"/>
+          <text x="38" y="28" font-size="14" font-weight="700" fill="#14161A" font-family="IBM Plex Sans">Feedback</text>
+          <rect x="16" y="58" width="130" height="20" rx="10" fill="#FBE9E7"/>
+          <text x="81" y="72" font-size="9.5" fill="#B3261E" text-anchor="middle" font-weight="600">CHANGES REQUESTED</text>
+
+          <rect x="16" y="92" width="228" height="96" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.3"/>
+          <text x="28" y="112" font-size="10" fill="#9CA3AF" font-family="IBM Plex Mono">REVIEWER NOTE</text>
+          <line x1="28" y1="126" x2="220" y2="126" stroke="#C7CBD3" stroke-width="2"/>
+          <line x1="28" y1="138" x2="220" y2="138" stroke="#C7CBD3" stroke-width="2"/>
+          <line x1="28" y1="150" x2="150" y2="150" stroke="#C7CBD3" stroke-width="2"/>
+          <line x1="28" y1="168" x2="200" y2="168" stroke="#E4E6EA" stroke-width="2"/>
+
+          <text x="16" y="212" font-size="10.5" fill="#9CA3AF" font-family="IBM Plex Mono">WHAT TO FIX</text>
+          <rect x="16" y="222" width="228" height="20" rx="4" fill="#F3F4F6"/>
+          <rect x="16" y="248" width="228" height="20" rx="4" fill="#F3F4F6"/>
+
+          <rect x="16" y="472" width="228" height="44" rx="10" fill="#2952CC"/>
+          <text x="130" y="499" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600">Revise &amp; resubmit</text>
+        </svg>
+      </div>
+      <div class="frame-caption">
+        <div class="tag">Recovery</div>
+        <h3>Feedback &amp; resubmit</h3>
+        <p>Reviewer comments broken into a plain checklist, not just prose — one tap returns to Submit proof with the same draft.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ DESKTOP ADAPTATION ============ -->
+<section id="desktop">
+  <div class="section-head">
+    <span class="num">04</span>
+    <h2>Desktop adaptation</h2>
+    <p>Assignment detail, adapted. The bottom tab bar becomes a persistent left sidebar, and the single decision moves from two stacked buttons to a side-by-side pair next to the content it affects — better suited to a keyboard-and-mouse session like Ravi's.</p>
+  </div>
+
+  <div class="desktop-wrap">
+    <svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
+      <rect x="0" y="0" width="900" height="460" fill="#fff" stroke="#E4E6EA"/>
+      <!-- top bar -->
+      <rect x="0" y="0" width="900" height="46" fill="#F3F4F6"/>
+      <text x="24" y="29" font-size="14" font-weight="700" fill="#14161A">Student Support</text>
+      <circle cx="860" cy="23" r="12" fill="none" stroke="#4B5160" stroke-width="1.4"/>
+
+      <!-- sidebar -->
+      <rect x="0" y="46" width="200" height="414" fill="#FAFAF8" stroke="#E4E6EA"/>
+      <rect x="16" y="70" width="168" height="34" rx="8" fill="#E7ECFB"/>
+      <text x="30" y="91" font-size="12" fill="#2952CC" font-weight="600">Home</text>
+      <text x="30" y="132" font-size="12" fill="#4B5160">Assignments</text>
+      <text x="30" y="164" font-size="12" fill="#4B5160">Materials</text>
+      <text x="30" y="196" font-size="12" fill="#4B5160">Profile</text>
+      <line x1="16" y1="220" x2="184" y2="220" stroke="#E4E6EA" stroke-width="1.2"/>
+      <text x="16" y="242" font-size="10" fill="#9CA3AF" font-family="IBM Plex Mono">DUE THIS WEEK</text>
+      <rect x="16" y="252" width="168" height="20" rx="4" fill="#F3F4F6"/>
+      <rect x="16" y="278" width="168" height="20" rx="4" fill="#F3F4F6"/>
+
+      <!-- main content -->
+      <rect x="224" y="70" width="440" height="30" rx="4" fill="none"/>
+      <text x="224" y="92" font-size="20" fill="#14161A" font-weight="700" font-family="Fraunces, serif">Case Study Draft</text>
+      <rect x="224" y="104" width="70" height="18" rx="9" fill="#FBE9E7"/>
+      <text x="259" y="116" font-size="8.5" fill="#B3261E" text-anchor="middle" font-family="IBM Plex Mono">DUE FRI</text>
+
+      <text x="224" y="150" font-size="10.5" fill="#9CA3AF" font-family="IBM Plex Mono">INSTRUCTIONS</text>
+      <line x1="224" y1="162" x2="660" y2="162" stroke="#C7CBD3" stroke-width="2"/>
+      <line x1="224" y1="176" x2="660" y2="176" stroke="#C7CBD3" stroke-width="2"/>
+      <line x1="224" y1="190" x2="520" y2="190" stroke="#C7CBD3" stroke-width="2"/>
+
+      <text x="224" y="222" font-size="10.5" fill="#9CA3AF" font-family="IBM Plex Mono">REQUIRED MATERIAL · 3</text>
+      <rect x="224" y="232" width="130" height="28" rx="14" fill="#F3F4F6"/>
+      <rect x="366" y="232" width="130" height="28" rx="14" fill="#F3F4F6"/>
+      <rect x="508" y="232" width="130" height="28" rx="14" fill="#F3F4F6"/>
+
+      <!-- decision, side by side on desktop -->
+      <line x1="224" y1="288" x2="664" y2="288" stroke="#E4E6EA" stroke-width="1.2"/>
+      <rect x="224" y="308" width="205" height="46" rx="10" fill="#fff" stroke="#1F2430" stroke-width="1.4"/>
+      <text x="326" y="336" font-size="12.5" fill="#14161A" text-anchor="middle" font-weight="600">Review materials first</text>
+      <rect x="440" y="308" width="224" height="46" rx="10" fill="#2952CC"/>
+      <text x="552" y="336" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600">I'm ready — submit proof</text>
+
+      <!-- right rail: context panel -->
+      <rect x="688" y="70" width="196" height="200" rx="10" fill="#FAFAF8" stroke="#E4E6EA"/>
+      <text x="704" y="94" font-size="10" fill="#9CA3AF" font-family="IBM Plex Mono">YOUR PROGRESS</text>
+      <circle cx="786" cy="150" r="38" fill="none" stroke="#E4E6EA" stroke-width="8"/>
+      <path d="M786 112 A38 38 0 0 1 818 168" fill="none" stroke="#2952CC" stroke-width="8" stroke-linecap="round"/>
+      <text x="786" y="156" font-size="14" fill="#14161A" text-anchor="middle" font-weight="700">60%</text>
+      <text x="786" y="238" font-size="10.5" fill="#4B5160" text-anchor="middle">Materials reviewed,</text>
+      <text x="786" y="252" font-size="10.5" fill="#4B5160" text-anchor="middle">proof not yet submitted</text>
+    </svg>
+  </div>
+
+  <div class="adapt-notes">
+    <div class="note"><b>Navigation</b>What was a 3-item bottom tab bar becomes a persistent left sidebar with full labels — more targets fit, and it stays reachable by keyboard tab order without scrolling past content first.</div>
+    <div class="note"><b>Content hierarchy</b>The single mobile column splits into content (left/center) and a status-at-a-glance right rail, so the progress indicator that was buried on mobile is always visible on desktop.</div>
+    <div class="note"><b>Interaction</b>The two decision actions sit side by side instead of stacked, matching a mouse/keyboard reading pattern left-to-right rather than a thumb's top-to-bottom reach.</div>
+    <div class="note"><b>Accessibility</b>Sidebar items and both decision buttons follow a single top-to-bottom, left-to-right focus order; the primary action keeps a 3:1 contrast focus ring against the white content area.</div>
+  </div>
+</section>
+
+<!-- ============ ANNOTATIONS ============ -->
+<section id="annotations">
+  <div class="section-head">
+    <span class="num">05</span>
+    <h2>Annotations</h2>
+    <p>Navigation model, content hierarchy, and interaction behavior, tied back to the three personas.</p>
+  </div>
+
+  <div class="annot-grid">
+    <div class="annot-card">
+      <h3>Navigation</h3>
+      <ul>
+        <li>Mobile: fixed bottom tab bar, 3 items max, so it stays usable one-handed on Asha's phone.</li>
+        <li>Desktop: the same 3 destinations move to a left sidebar with visible labels, no icon-only guessing.</li>
+        <li>Every secondary screen (materials, feedback) has one back path and one forward action — never both a back button and a cancel button competing for attention.</li>
+      </ul>
+    </div>
+    <div class="annot-card">
+      <h3>Content hierarchy</h3>
+      <ul>
+        <li>Status (due soon, in review, changes requested) is always the first thing colored on a card — students scan for that before the title.</li>
+        <li>Instructions are shown before required material, and material before the submit action, matching the order a student actually needs it in.</li>
+        <li>Reviewer feedback is split into short, checkable items rather than a paragraph, so Ravi's screen magnifier isn't panning across long lines.</li>
+      </ul>
+    </div>
+    <div class="annot-card">
+      <h3>Interaction &amp; states</h3>
+      <ul>
+        <li>Forms autosave locally; Meera can close the app mid-task on a shared device and pick back up without losing work.</li>
+        <li>The submit button disables with an explanation (never silently) when offline, and re-enables automatically on reconnect — no manual "check connection" step.</li>
+        <li>Focus order follows visual order top-to-bottom on every screen; the primary action always keeps a visible focus ring at 3:1 contrast against its background for keyboard users.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="explain" id="explanation">
+  <div class="wrap" style="padding:0;">
+    <h2>Short explanation</h2>
+    <p>The flow is built around one decision (has the student reviewed enough to submit?) and one recovery loop (reviewer feedback sends them back to the same submit screen with their draft intact). Depth stays shallow on purpose — everything is reachable in three taps from Home — because the three personas share one constraint even though their devices differ: none of them can afford to hunt for where something lives. Mobile is the base layout; the desktop pass only changes how navigation and status are exposed, not the underlying task order, so the same mental model holds on either device.</p>
+    <div class="meta">Student Support Service · IA &amp; Wireframes · Task 2</div>
+  </div>
+</footer>
+
+</body>
+</html>
